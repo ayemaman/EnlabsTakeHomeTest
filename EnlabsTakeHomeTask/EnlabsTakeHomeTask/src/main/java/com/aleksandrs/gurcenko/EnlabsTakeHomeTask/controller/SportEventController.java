@@ -65,6 +65,9 @@ public class SportEventController {
 
     @PostMapping("/add")
     public ResponseEntity<SportEvent> add(@RequestBody SportEvent sportEvent) {
+        if(sportEvent.getId()!=null){
+            sportEvent.setId(null);
+        }
         log.info("POST request for event:["+sportEvent+"]");
         SportEvent created = sportEventService.addSportEvent(sportEvent);
         URI uri=utilities.createURIForEvent(created);
