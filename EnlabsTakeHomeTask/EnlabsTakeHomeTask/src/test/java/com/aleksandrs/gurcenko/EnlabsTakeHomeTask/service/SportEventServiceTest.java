@@ -119,7 +119,7 @@ class SportEventServiceTest {
 
 
         assertThatThrownBy( () -> underTest.getSportEventsByStatus(sportEvent.getStatus())).isInstanceOf(NoSportEventsFoundByStatusException.class)
-                .hasMessage("No events found with status "+sportEvent.getStatus());
+                .hasMessage("Could not retrieve events with status: "+sportEvent.getStatus());
 
     }
 
@@ -146,7 +146,7 @@ class SportEventServiceTest {
     }
 
     @Test
-    void getSportEventsBySportWithNoEntries() {
+    void getSportEventsBySportWithOptionalEmpty() {
         SportEvent sportEvent=new SportEvent();
         sportEvent.setSport("football");
         sportEvent.setName("TEST CUP 2022");
@@ -154,10 +154,8 @@ class SportEventServiceTest {
 
         Optional<List<SportEvent>> optionalList=Optional.empty();
         given(sportEventRepository.findEventsBySport(sportEvent.getSport())).willReturn(optionalList);
-
-
         assertThatThrownBy( () -> underTest.getSportEventsBySportType(sportEvent.getSport())).isInstanceOf(NoSportEventsFoundBySportException.class)
-                .hasMessage("No events found with sport type: "+sportEvent.getSport());
+                .hasMessage("Could not retrieve events with sport type: "+sportEvent.getSport());
 
     }
 
@@ -182,7 +180,7 @@ class SportEventServiceTest {
     }
 
     @Test
-    void getSportEventsByStatusAndSportWithNoEntries() {
+    void getSportEventsByStatusAndSportWithOptionalEmpty() {
         SportEvent sportEvent=new SportEvent();
         sportEvent.setSport("football");
         sportEvent.setName("TEST CUP 2022");
@@ -194,7 +192,7 @@ class SportEventServiceTest {
 
         assertThatThrownBy( () -> underTest.getSportEventsByStatusAndSportType(sportEvent.getStatus(),sportEvent.getSport()))
                 .isInstanceOf(NoSportEventsFoundBySportAndStatusException.class)
-                .hasMessage("No events found with sport type: "+sportEvent.getSport()+" and status: "+sportEvent.getStatus());
+                .hasMessage("Could not retrieve events with sport type: "+sportEvent.getSport()+" and status: "+sportEvent.getStatus());
 
     }
 

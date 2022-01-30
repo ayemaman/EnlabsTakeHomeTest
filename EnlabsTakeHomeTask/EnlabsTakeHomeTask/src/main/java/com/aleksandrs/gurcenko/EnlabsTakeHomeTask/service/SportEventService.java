@@ -36,18 +36,18 @@ public class SportEventService {
 
     public List<SportEvent> getSportEventsByStatus(SportEventStatus status){
         return sportEventRepository.findEventsByStatus(status.name())
-                .orElseThrow(()-> new NoSportEventsFoundByStatusException("No events found with status "+status));
+                .orElseThrow(()-> new NoSportEventsFoundByStatusException("Could not retrieve events with status: "+status));
     }
 
     public List<SportEvent> getSportEventsBySportType(String sportType){
         return sportEventRepository.findEventsBySport(sportType.toUpperCase())
-                .orElseThrow(()-> new NoSportEventsFoundBySportException("No events found with sport type: "+sportType));
+                .orElseThrow(()-> new NoSportEventsFoundBySportException("Could not retrieve events with sport type: "+sportType));
     }
 
 
     public List<SportEvent> getSportEventsByStatusAndSportType(SportEventStatus status, String sportType){
         return sportEventRepository.findEventsByStatusAndSportType(status.name(),sportType.toUpperCase())
-                .orElseThrow(()-> new NoSportEventsFoundBySportAndStatusException("No events found with sport type: "+sportType+" and status: "+status));
+                .orElseThrow(()-> new NoSportEventsFoundBySportAndStatusException("Could not retrieve events with sport type: "+sportType+" and status: "+status));
     }
 
     public SportEvent updateSportEventStatus(Long id, SportEventStatus status){

@@ -18,28 +18,28 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(SportEventWithIdNotFoundException.class)
     public ResponseEntity handleSportEventWithIdNotFoundException(SportEventWithIdNotFoundException e){
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(NoSportEventsFoundByStatusException.class)
     public ResponseEntity handleNoSportEventsFoundByStatusException(NoSportEventsFoundByStatusException e) {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(NoSportEventsFoundBySportException.class)
     public ResponseEntity handleNoSportEventsFoundBySportException(NoSportEventsFoundBySportException e) {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(NoSportEventsFoundBySportAndStatusException.class)
     public ResponseEntity handleNoSportEventsFoundBySportAndStatusException(NoSportEventsFoundBySportAndStatusException e) {
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
+                .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
 

@@ -119,7 +119,7 @@ class SportEventControllerTest {
 
         mockMvc.perform(get(get_url)
                         .param("status",SportEventStatus.ACTIVE.name()))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -164,7 +164,7 @@ class SportEventControllerTest {
 
         mockMvc.perform(get(get_url)
                         .param("sport","football"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNotFound());
 
     }
 
@@ -214,7 +214,7 @@ class SportEventControllerTest {
         mockMvc.perform(get(get_url)
                         .param("sport","football")
                         .param("status", SportEventStatus.ACTIVE.name()))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -247,7 +247,7 @@ class SportEventControllerTest {
 
         mockMvc.perform(get(get_url)
                         .param("id","1"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -278,6 +278,7 @@ class SportEventControllerTest {
                 .andExpect(jsonPath("$.utcStartTime").value(time.toString()));;
 
     }
+
 
     @Test
     void updateStatus() throws Exception {
