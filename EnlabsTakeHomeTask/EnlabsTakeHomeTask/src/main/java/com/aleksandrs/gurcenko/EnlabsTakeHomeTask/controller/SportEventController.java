@@ -67,7 +67,6 @@ public class SportEventController {
     public ResponseEntity<SportEvent> add(@RequestBody SportEvent sportEvent) {
         log.info("POST request for event:["+sportEvent+"]");
         SportEvent created = sportEventService.addSportEvent(sportEvent);
-        log.info("Event created with id ["+created.getId()+"]");
         URI uri=utilities.createURIForEvent(created);
         return ResponseEntity
                 .created(uri)

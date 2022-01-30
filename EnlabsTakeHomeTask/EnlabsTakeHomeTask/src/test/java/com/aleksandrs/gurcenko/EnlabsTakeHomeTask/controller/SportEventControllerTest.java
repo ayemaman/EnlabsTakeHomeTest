@@ -12,12 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -259,15 +263,19 @@ class SportEventControllerTest {
         savedSportEvent.setSport("football");
         savedSportEvent.setName("TEST CUP 2022");
         savedSportEvent.setUtcStartTime(time);
-
-        Mockito.when(service.addSportEvent(sportEvent)).thenReturn(savedSportEvent);
+        Mockito.when(service.addSportEvent(any())).thenReturn(savedSportEvent);
         Mockito.when(utilities.createURIForEvent(savedSportEvent)).thenReturn(URI.create(""));
         String post_url = "/api/sport_events/add";
-
         mockMvc.perform(post(post_url)
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(sportEvent))
-                ).andExpect(status().isCreated());
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(sportEvent))
+                    )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.sport").value("FOOTBALL"))
+                .andExpect(jsonPath("$.name").value("TEST CUP 2022"))
+                .andExpect(jsonPath("$.status").value("INACTIVE"))
+                .andExpect(jsonPath("$.utcStartTime").value(time.toString()));;
 
     }
 
